@@ -22,7 +22,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.util.Log;
 
-import lineageos.app.LineageContextConstants;
+import android.openfde.OpenfdeContextConstants;
 
 public class Clipboard {
     private static final String TAG = "WayDroidClipboard";
@@ -56,7 +56,7 @@ public class Clipboard {
         if (sService != null) {
             return sService;
         }
-        IBinder b = ServiceManager.getService(LineageContextConstants.WAYDROID_CLIPBOARD_SERVICE);
+        IBinder b = ServiceManager.getService(OpenfdeContextConstants.OPENFDE_CLIPBOARD_SERVICE);
 
         if (b == null) {
             Log.e(TAG, "null service. SAD!");

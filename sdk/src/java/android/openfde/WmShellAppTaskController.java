@@ -14,10 +14,10 @@ import android.util.Log;
 import java.lang.ref.WeakReference;
 import java.util.List;
 import com.android.internal.policy.DecorView;
-import com.android.internal.policy.AppTaskController;
-import com.android.internal.policy.DecorWindowInsetsCallback;
-import com.android.internal.policy.TaskRemoteServiceWrapper;
-import com.android.internal.policy.SystemBarController;
+//import com.android.internal.policy.AppTaskController;
+//import com.android.internal.policy.DecorWindowInsetsCallback;
+//import com.android.internal.policy.TaskRemoteServiceWrapper;
+//import com.android.internal.policy.SystemBarController;
 
 /**
  * WmShellAppTaskController - Implementation of AppTaskController interface.
@@ -25,7 +25,8 @@ import com.android.internal.policy.SystemBarController;
  * Works in conjunction with TaskRemoteServiceWrapper for remote service operations.
  * @hide
  */
-public class WmShellAppTaskController implements AppTaskController, DecorWindowInsetsCallback {
+
+public class WmShellAppTaskController /*implements AppTaskController, DecorWindowInsetsCallback*/ {
     private static final String TAG = "WmShellAppTaskController";
 
     private AppTaskStatusListener mStatusListener;
@@ -37,7 +38,7 @@ public class WmShellAppTaskController implements AppTaskController, DecorWindowI
     private ActivityTaskManager mActivityTaskManager;
     private int mWindowingMode = AppTaskStatusListener.WINDOWING_MODE_FREEFORM;
     private boolean mSystemBarVisibility = true;
-    private TaskRemoteServiceWrapper mServiceWrapper = TaskRemoteServiceWrapper.getInstance();
+    //private TaskRemoteServiceWrapper mServiceWrapper = TaskRemoteServiceWrapper.getInstance();
     private final Object mLock = new Object();
     private DecorView mDecorView = null;
     private WeakReference<Activity> mActivity;
@@ -62,6 +63,7 @@ public class WmShellAppTaskController implements AppTaskController, DecorWindowI
      * @param hideRawCaption Whether to hide the raw caption
      * @throws IllegalArgumentException if parameters are invalid
      */
+    /*
     public void initCustomCaption(WeakReference<Activity> activity,
                                   AppTaskStatusListener listener,
                                   boolean hideRawCaption) {
@@ -114,9 +116,9 @@ public class WmShellAppTaskController implements AppTaskController, DecorWindowI
         mLinkedToWMshell = true;
         Log.i(TAG, "Custom caption initialized successfully");
     }
-
+    */
     public void reinit(){
-        initCustomCaption(mActivity, mStatusListener, mIsRawCaptionHidden);
+        //initCustomCaption(mActivity, mStatusListener, mIsRawCaptionHidden);
     }
 
     /**
@@ -143,6 +145,7 @@ public class WmShellAppTaskController implements AppTaskController, DecorWindowI
      *
      * @return true if both status bar and navigation bar are visible
      */
+    /*
     private boolean getSystemBarVisibility() {
         Display display = getDisplay();
         int displayId = 0;
@@ -169,12 +172,13 @@ public class WmShellAppTaskController implements AppTaskController, DecorWindowI
 
         return mSystemBarVisibility;
     }
-
+    */
     /**
      * Update system bar controller registration.
      * This method registers a SystemBarController with TaskRemoteServiceWrapper
      * which will create and manage the IAppSystemBarController.Stub callback.
      */
+    /*
     public void updateSystemBarController(SystemBarController systemBarController) {
         Log.d(TAG, "Updating system bar controller");
 
@@ -189,12 +193,6 @@ public class WmShellAppTaskController implements AppTaskController, DecorWindowI
             Log.w(TAG, "Task info is null");
             return;
         }
-
-        // Skip if same task
-//        if (mTaskInfo != null && mTaskInfo.taskId == taskInfo.taskId) {
-//            Log.d(TAG, "Same task, skipping controller update");
-//            return;
-//        }
 
         try {
             // Unregister old controller if exists
@@ -232,6 +230,7 @@ public class WmShellAppTaskController implements AppTaskController, DecorWindowI
             Log.e(TAG, "Unexpected error updating system bar controller", e);
         }
     }
+    */
 
     /**
      * Get task information from activity.
@@ -327,7 +326,7 @@ public class WmShellAppTaskController implements AppTaskController, DecorWindowI
         }
         return null;
     }
-
+/*
     @Override
     public void closeTask() {
         Log.i(TAG, "Closing task");
@@ -430,11 +429,12 @@ public class WmShellAppTaskController implements AppTaskController, DecorWindowI
         // Notify status change
         onStatusChanged();
     }
-
+*/
     /**
      * Handle status changes and notify listener.
      * This is called when windowing mode or system bar visibility changes.
      */
+     /*
     private void onStatusChanged() {
         Log.d(TAG, "Task status changed");
 
@@ -468,12 +468,13 @@ public class WmShellAppTaskController implements AppTaskController, DecorWindowI
             Log.d(TAG, "Not linked to WM shell, skipping status update");
         }
     }
-
+*/
     /**
      * Call task operation through service wrapper.
      *
      * @param operation The operation code to execute
      */
+    /*
     public void callTaskOperation(int operation) {
         Log.d(TAG, "Calling task operation: " + operation);
         if(operation > TASK_CAPTION_OPERATION_WINDOWDECORATION_RELAYOUT ||
@@ -505,11 +506,12 @@ public class WmShellAppTaskController implements AppTaskController, DecorWindowI
             }
         }
     }
-
+    */
     /**
      * Clean up resources and service connections.
      * This should be called when the activity is destroyed.
      */
+    /*
     public void cleanup() {
         Log.i(TAG, "Cleaning up WmShellAppTaskController");
 
@@ -541,7 +543,7 @@ public class WmShellAppTaskController implements AppTaskController, DecorWindowI
             Log.i(TAG, "WmShellAppTaskController cleanup completed");
         }
     }
-
+    */
     /**
      * Check if linked to WM shell.
      *

@@ -22,7 +22,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.util.Log;
 
-import lineageos.app.LineageContextConstants;
+import android.openfde.OpenfdeContextConstants;
 
 public class Hardware {
     private static final String TAG = "WayDroidHardware";
@@ -61,7 +61,7 @@ public class Hardware {
         if (sService != null) {
             return sService;
         }
-        IBinder b = ServiceManager.getService(LineageContextConstants.WAYDROID_HARDWARE_SERVICE);
+        IBinder b = ServiceManager.getService(OpenfdeContextConstants.OPENFDE_HARDWARE_SERVICE);
 
         if (b == null) {
             Log.e(TAG, "null service. SAD!");

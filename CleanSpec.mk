@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The CyanogenMod Project
+# Copyright (C) 2026 The OpenFDE Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -37,13 +37,12 @@
 # *****************************************************************
 # NEWER CLEAN STEPS MUST BE AT THE END OF THE LIST ABOVE THE BANNER
 # *****************************************************************
-$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/APPS/org.lineageos.platform-res_intermediates)
-$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/org.lineageos.platform_intermediates)
-$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/org.lineageos.platform.sdk_intermediates)
-$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/org.lineageos.platform.internal_intermediates)
-$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/lineage-sdk_stubs_current_intermediates)
-$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/org.lineageos.platform_intermediates)
-$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/org.lineageos.platform.sdk_intermediates)
-# Purge out the api stubs timestamp files (they're used as a dependency for checkapi-lineage)
-$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/docs/lineage-api-stubs*)
-$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/docs/lineage-system-api-stubs*)
+$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/org.openfde.platform_intermediates)
+$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/org.openfde.platform.sdk_intermediates)
+$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/org.openfde.platform.internal_intermediates)
+$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/openfde-sdk_stubs_current_intermediates)
+$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/org.openfde.platform_intermediates)
+$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/org.openfde.platform.sdk_intermediates)
+# Purge out the api stubs timestamp files (they're used as a dependency for checkapi-openfde)
+$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/docs/openfde-api-stubs*)
+$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/docs/openfde-system-api-stubs*)

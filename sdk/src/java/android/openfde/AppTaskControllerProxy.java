@@ -67,7 +67,7 @@ public class AppTaskControllerProxy { // 2. 实现 AutoCloseable
             @NonNull AppTaskStatusListener listener   // 将 listener 移到参数最后，并加 @NonNull
     ) {
         // 确保内部实现 mImpl 调用的参数顺序也同步修改
-        mImpl.initCustomCaption(activity, listener, hideRawCaption);
+        //mImpl.initCustomCaption(activity, listener, hideRawCaption);
     }
 
     /**
@@ -75,7 +75,7 @@ public class AppTaskControllerProxy { // 2. 实现 AutoCloseable
      */
     @FlaggedApi("android.openfde.openfde_api")
     public void enterOrExitFullscreen() {
-        mImpl.enterOrExitFullscreen();
+        //mImpl.enterOrExitFullscreen();
     }
 
     /**
@@ -83,7 +83,7 @@ public class AppTaskControllerProxy { // 2. 实现 AutoCloseable
      */
     @FlaggedApi("android.openfde.openfde_api")
     public void closeTask() {
-        mImpl.closeTask();
+        //mImpl.closeTask();
     }
 
     /**
@@ -91,7 +91,7 @@ public class AppTaskControllerProxy { // 2. 实现 AutoCloseable
      */
     @FlaggedApi("android.openfde.openfde_api")
     public void back() {
-        mImpl.back();
+        //mImpl.back();
     }
 
     /**
@@ -100,7 +100,7 @@ public class AppTaskControllerProxy { // 2. 实现 AutoCloseable
      */
     @FlaggedApi("android.openfde.openfde_api")
     public void toggleStatusBarNavigationBar(boolean hide){
-        mImpl.toggleStatusBarNavigationBar(hide);
+        //mImpl.toggleStatusBarNavigationBar(hide);
     }
 
     /**
@@ -109,7 +109,7 @@ public class AppTaskControllerProxy { // 2. 实现 AutoCloseable
      */
     @FlaggedApi("android.openfde.openfde_api")
     public void callTaskOperation(int opCode){
-        mImpl.callTaskOperation(opCode);
+        //mImpl.callTaskOperation(opCode);
     }
 
     /**
@@ -117,7 +117,7 @@ public class AppTaskControllerProxy { // 2. 实现 AutoCloseable
      */
     @FlaggedApi("android.openfde.openfde_api")
     public void minimize() {
-        mImpl.minimize();
+        //mImpl.minimize();
     }
 
     /**
@@ -125,7 +125,7 @@ public class AppTaskControllerProxy { // 2. 实现 AutoCloseable
      */
     @FlaggedApi("android.openfde.openfde_api")
     public void maximizeOrNot() {
-        mImpl.maximizeOrNot();
+        //mImpl.maximizeOrNot();
     }
 
     /**
@@ -144,7 +144,7 @@ public class AppTaskControllerProxy { // 2. 实现 AutoCloseable
      */
     @FlaggedApi("android.openfde.openfde_api")
     public void cleanup(){
-        mImpl.cleanup();
+        //mImpl.cleanup();
     }
 
     /**

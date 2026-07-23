@@ -22,13 +22,13 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.util.Log;
 
-import lineageos.app.LineageContextConstants;
+import android.openfde.OpenfdeContextConstants;
 
 import java.util.List;
 import java.util.ArrayList;
 
 public class Platform {
-    private static final String TAG = "WayDroidPlatform";
+    private static final String TAG = "OpenfdePlatform";
 
     /**
      * Unable to determine status, an error occured
@@ -85,7 +85,7 @@ public class Platform {
         if (sService != null) {
             return sService;
         }
-        IBinder b = ServiceManager.getService(LineageContextConstants.WAYDROID_PLATFORM_SERVICE);
+        IBinder b = ServiceManager.getService(OpenfdeContextConstants.OPENFDE_PLATFORM_SERVICE);
 
         if (b == null) {
             Log.e(TAG, "null service. SAD!");
