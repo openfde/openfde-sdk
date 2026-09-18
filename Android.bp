@@ -154,11 +154,11 @@ java_library {
         "sdk/src/java/android/openfde/IP2p.aidl",
     ],
     visibility: [
-        "packages/modules/Wifi/service",
-        "visibility:public",
+        "//packages/modules/Wifi/service",
     ],
 
     apex_available: [
         "com.android.wifi",
     ],
+    installable:true,
 }
