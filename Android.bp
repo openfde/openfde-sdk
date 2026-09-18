@@ -143,3 +143,22 @@ java_library {
         "com.android.btservices",
     ],
 }
+java_library {
+    name: "org.openfde.platform.p2p",
+    min_sdk_version: "30",
+    platform_apis: true,
+    sdk_version: "module_current",
+
+    srcs: [
+        "sdk/src/java/android/openfde/P2p.java",
+        "sdk/src/java/android/openfde/IP2p.aidl",
+    ],
+    visibility: [
+        "packages/modules/Wifi/service",
+        "visibility:public",
+    ],
+
+    apex_available: [
+        "com.android.wifi",
+    ],
+}
