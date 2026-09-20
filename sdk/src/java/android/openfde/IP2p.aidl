@@ -2,6 +2,7 @@ package android.openfde;
 
 interface IP2p {
     void addBonjourService(in byte[] query, in byte[] response);
+    void p2p_find(in String args);
     void addGroup(in boolean persistent, in int persistentNetworkId);
     void cancelConnect();
 

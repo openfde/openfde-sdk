@@ -477,5 +477,19 @@ public class P2p {
         }
         return false;
     }
+
+    public boolean p2pFind(String args) {
+        IP2p service = getService();
+        if (service == null) {
+            return false;
+        }
+        try {
+            service.p2p_find(args);
+            return true;
+        } catch (RemoteException e) {
+            Log.e(TAG, e.getLocalizedMessage(), e);
+        }
+        return false;
+    }
 }
 
