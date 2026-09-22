@@ -29,6 +29,122 @@ public class P2p {
     private static IP2p sService;
     private static P2p sInstance;
     private final Context mContext;
+    private EventListener eventListener;
+    private IP2pCallback callback;
+
+    /**
+     * Listener for P2P events reported by the openfdep2p binder service.
+     * All methods have empty default implementations, override only the
+     * events you need. Callbacks arrive on a binder thread.
+     */
+    public interface EventListener {
+        default void onDeviceFound(byte[] srcAddress, byte[] p2pDeviceAddress,
+                byte[] primaryDeviceType, String deviceName, int configMethods,
+                int deviceCapabilities, int groupCapabilities, byte[] wfdDeviceInfo) {
+        }
+
+        default void onDeviceLost(byte[] p2pDeviceAddress) {
+        }
+
+        default void onFindStopped() {
+        }
+
+        default void onGoNegotiationCompleted(int status) {
+        }
+
+        default void onGoNegotiationRequest(byte[] srcAddress, int passwordId) {
+        }
+
+        default void onGroupFormationFailure(String failureReason) {
+        }
+
+        default void onGroupFormationSuccess() {
+        }
+
+        default void onGroupRemoved(String groupIfname, boolean isGroupOwner) {
+        }
+
+        default void onGroupStarted(String groupIfname, boolean isGroupOwner, byte[] ssid,
+                int frequency, byte[] psk, String passphrase, byte[] goDeviceAddress,
+                boolean isPersistent) {
+        }
+
+        default void onInvitationReceived(byte[] srcAddress, byte[] goDeviceAddress,
+                byte[] bssid, int persistentNetworkId, int operatingFrequency) {
+        }
+
+        default void onInvitationResult(byte[] bssid, int status) {
+        }
+
+        default void onProvisionDiscoveryCompleted(byte[] p2pDeviceAddress, boolean isRequest,
+                int status, int configMethods, String generatedPin) {
+        }
+
+        default void onR2DeviceFound(byte[] srcAddress, byte[] p2pDeviceAddress,
+                byte[] primaryDeviceType, String deviceName, int configMethods,
+                int deviceCapabilities, int groupCapabilities,
+                byte[] wfdDeviceInfo, byte[] wfdR2DeviceInfo) {
+        }
+
+        default void onServiceDiscoveryResponse(byte[] srcAddress, int updateIndicator,
+                byte[] tlvs) {
+        }
+
+        default void onStaAuthorized(byte[] srcAddress, byte[] p2pDeviceAddress) {
+        }
+
+        default void onStaDeauthorized(byte[] srcAddress, byte[] p2pDeviceAddress) {
+        }
+
+        default void onGroupFrequencyChanged(String groupIfname, int frequency) {
+        }
+
+        default void onDeviceFoundWithVendorElements(byte[] srcAddress, byte[] p2pDeviceAddress,
+                byte[] primaryDeviceType, String deviceName, int configMethods,
+                int deviceCapabilities, int groupCapabilities,
+                byte[] wfdDeviceInfo, byte[] wfdR2DeviceInfo, byte[] vendorElemBytes) {
+        }
+
+        default void onGroupStartedWithParams(String groupInterfaceName, boolean isGroupOwner,
+                byte[] ssid, int frequencyMHz, byte[] psk, String passphrase,
+                byte[] goDeviceAddress, boolean isPersistent) {
+        }
+
+        default void onPeerClientJoined(byte[] srcAddress, byte[] p2pDeviceAddress,
+                boolean isVpSupported) {
+        }
+
+        default void onPeerClientDisconnected(byte[] srcAddress, byte[] p2pDeviceAddress) {
+        }
+
+        default void onProvisionDiscoveryCompletedEvent(byte[] p2pDeviceAddress, int status,
+                int configMethods, String generatedPin) {
+        }
+
+        default void onDeviceFoundWithParams(byte[] srcAddress, byte[] p2pDeviceAddress,
+                byte[] primaryDeviceType, String deviceName, int configMethods,
+                int deviceCapabilities, int groupCapabilities, byte[] wfdDeviceInfo,
+                byte[] wfdR2DeviceInfo, byte[] vendorElem) {
+        }
+
+        default void onGoNegotiationRequestWithParams(byte[] srcAddress, int passwordId,
+                int goIntent) {
+        }
+
+        default void onInvitationReceivedWithParams(byte[] srcAddress, byte[] goDeviceAddress,
+                byte[] bssid, int persistentNetworkId, int operatingFrequencyMHz) {
+        }
+
+        default void onUsdBasedServiceDiscoveryResult(int sessionId, byte[] srcAddress,
+                int updateIndicator, byte[] tlvs) {
+        }
+
+        default void onUsdBasedServiceDiscoveryTerminated(int sessionId, int reasonCode) {
+        }
+
+        default void onUsdBasedServiceAdvertisementTerminated(int sessionId, int reasonCode) {
+        }
+    }
 
     private P2p(Context context) {
         mContext = context == null ? null : context.getApplicationContext();
@@ -490,6 +606,232 @@ public class P2p {
             Log.e(TAG, e.getLocalizedMessage(), e);
         }
         return false;
+    }
+
+    public boolean registerCallback(EventListener listener) {
+        IP2p service = getService();
+        if (service == null || listener == null) {
+            return false;
+        }
+        eventListener = listener;
+        try {
+            callback = new IP2pCallback.Stub() {
+                @Override
+                public void onDeviceFound(byte[] srcAddress, byte[] p2pDeviceAddress,
+                        byte[] primaryDeviceType, String deviceName, int configMethods,
+                        int deviceCapabilities, int groupCapabilities,
+                        byte[] wfdDeviceInfo) throws RemoteException {
+                    eventListener.onDeviceFound(srcAddress, p2pDeviceAddress, primaryDeviceType,
+                            deviceName, configMethods, deviceCapabilities, groupCapabilities,
+                            wfdDeviceInfo);
+                }
+
+                @Override
+                public void onDeviceLost(byte[] p2pDeviceAddress) throws RemoteException {
+                    eventListener.onDeviceLost(p2pDeviceAddress);
+                }
+
+                @Override
+                public void onFindStopped() throws RemoteException {
+                    eventListener.onFindStopped();
+                }
+
+                @Override
+                public void onGoNegotiationCompleted(int status) throws RemoteException {
+                    eventListener.onGoNegotiationCompleted(status);
+                }
+
+                @Override
+                public void onGoNegotiationRequest(byte[] srcAddress,
+                        int passwordId) throws RemoteException {
+                    eventListener.onGoNegotiationRequest(srcAddress, passwordId);
+                }
+
+                @Override
+                public void onGroupFormationFailure(String failureReason) throws RemoteException {
+                    eventListener.onGroupFormationFailure(failureReason);
+                }
+
+                @Override
+                public void onGroupFormationSuccess() throws RemoteException {
+                    eventListener.onGroupFormationSuccess();
+                }
+
+                @Override
+                public void onGroupRemoved(String groupIfname,
+                        boolean isGroupOwner) throws RemoteException {
+                    eventListener.onGroupRemoved(groupIfname, isGroupOwner);
+                }
+
+                @Override
+                public void onGroupStarted(String groupIfname, boolean isGroupOwner, byte[] ssid,
+                        int frequency, byte[] psk, String passphrase, byte[] goDeviceAddress,
+                        boolean isPersistent) throws RemoteException {
+                    eventListener.onGroupStarted(groupIfname, isGroupOwner, ssid, frequency, psk,
+                            passphrase, goDeviceAddress, isPersistent);
+                }
+
+                @Override
+                public void onInvitationReceived(byte[] srcAddress, byte[] goDeviceAddress,
+                        byte[] bssid, int persistentNetworkId,
+                        int operatingFrequency) throws RemoteException {
+                    eventListener.onInvitationReceived(srcAddress, goDeviceAddress, bssid,
+                            persistentNetworkId, operatingFrequency);
+                }
+
+                @Override
+                public void onInvitationResult(byte[] bssid, int status) throws RemoteException {
+                    eventListener.onInvitationResult(bssid, status);
+                }
+
+                @Override
+                public void onProvisionDiscoveryCompleted(byte[] p2pDeviceAddress,
+                        boolean isRequest, int status, int configMethods,
+                        String generatedPin) throws RemoteException {
+                    eventListener.onProvisionDiscoveryCompleted(p2pDeviceAddress, isRequest,
+                            status, configMethods, generatedPin);
+                }
+
+                @Override
+                public void onR2DeviceFound(byte[] srcAddress, byte[] p2pDeviceAddress,
+                        byte[] primaryDeviceType, String deviceName, int configMethods,
+                        int deviceCapabilities, int groupCapabilities, byte[] wfdDeviceInfo,
+                        byte[] wfdR2DeviceInfo) throws RemoteException {
+                    eventListener.onR2DeviceFound(srcAddress, p2pDeviceAddress, primaryDeviceType,
+                            deviceName, configMethods, deviceCapabilities, groupCapabilities,
+                            wfdDeviceInfo, wfdR2DeviceInfo);
+                }
+
+                @Override
+                public void onServiceDiscoveryResponse(byte[] srcAddress, int updateIndicator,
+                        byte[] tlvs) throws RemoteException {
+                    eventListener.onServiceDiscoveryResponse(srcAddress, updateIndicator, tlvs);
+                }
+
+                @Override
+                public void onStaAuthorized(byte[] srcAddress,
+                        byte[] p2pDeviceAddress) throws RemoteException {
+                    eventListener.onStaAuthorized(srcAddress, p2pDeviceAddress);
+                }
+
+                @Override
+                public void onStaDeauthorized(byte[] srcAddress,
+                        byte[] p2pDeviceAddress) throws RemoteException {
+                    eventListener.onStaDeauthorized(srcAddress, p2pDeviceAddress);
+                }
+
+                @Override
+                public void onGroupFrequencyChanged(String groupIfname,
+                        int frequency) throws RemoteException {
+                    eventListener.onGroupFrequencyChanged(groupIfname, frequency);
+                }
+
+                @Override
+                public void onDeviceFoundWithVendorElements(byte[] srcAddress,
+                        byte[] p2pDeviceAddress, byte[] primaryDeviceType, String deviceName,
+                        int configMethods, int deviceCapabilities, int groupCapabilities,
+                        byte[] wfdDeviceInfo, byte[] wfdR2DeviceInfo,
+                        byte[] vendorElemBytes) throws RemoteException {
+                    eventListener.onDeviceFoundWithVendorElements(srcAddress, p2pDeviceAddress,
+                            primaryDeviceType, deviceName, configMethods, deviceCapabilities,
+                            groupCapabilities, wfdDeviceInfo, wfdR2DeviceInfo, vendorElemBytes);
+                }
+
+                @Override
+                public void onGroupStartedWithParams(String groupInterfaceName,
+                        boolean isGroupOwner, byte[] ssid, int frequencyMHz, byte[] psk,
+                        String passphrase, byte[] goDeviceAddress,
+                        boolean isPersistent) throws RemoteException {
+                    eventListener.onGroupStartedWithParams(groupInterfaceName, isGroupOwner, ssid,
+                            frequencyMHz, psk, passphrase, goDeviceAddress, isPersistent);
+                }
+
+                @Override
+                public void onPeerClientJoined(byte[] srcAddress, byte[] p2pDeviceAddress,
+                        boolean isVpSupported) throws RemoteException {
+                    eventListener.onPeerClientJoined(srcAddress, p2pDeviceAddress, isVpSupported);
+                }
+
+                @Override
+                public void onPeerClientDisconnected(byte[] srcAddress,
+                        byte[] p2pDeviceAddress) throws RemoteException {
+                    eventListener.onPeerClientDisconnected(srcAddress, p2pDeviceAddress);
+                }
+
+                @Override
+                public void onProvisionDiscoveryCompletedEvent(byte[] p2pDeviceAddress, int status,
+                        int configMethods, String generatedPin) throws RemoteException {
+                    eventListener.onProvisionDiscoveryCompletedEvent(p2pDeviceAddress, status,
+                            configMethods, generatedPin);
+                }
+
+                @Override
+                public void onDeviceFoundWithParams(byte[] srcAddress, byte[] p2pDeviceAddress,
+                        byte[] primaryDeviceType, String deviceName, int configMethods,
+                        int deviceCapabilities, int groupCapabilities, byte[] wfdDeviceInfo,
+                        byte[] wfdR2DeviceInfo, byte[] vendorElem) throws RemoteException {
+                    eventListener.onDeviceFoundWithParams(srcAddress, p2pDeviceAddress,
+                            primaryDeviceType, deviceName, configMethods, deviceCapabilities,
+                            groupCapabilities, wfdDeviceInfo, wfdR2DeviceInfo, vendorElem);
+                }
+
+                @Override
+                public void onGoNegotiationRequestWithParams(byte[] srcAddress, int passwordId,
+                        int goIntent) throws RemoteException {
+                    eventListener.onGoNegotiationRequestWithParams(srcAddress, passwordId,
+                            goIntent);
+                }
+
+                @Override
+                public void onInvitationReceivedWithParams(byte[] srcAddress,
+                        byte[] goDeviceAddress, byte[] bssid, int persistentNetworkId,
+                        int operatingFrequencyMHz) throws RemoteException {
+                    eventListener.onInvitationReceivedWithParams(srcAddress, goDeviceAddress,
+                            bssid, persistentNetworkId, operatingFrequencyMHz);
+                }
+
+                @Override
+                public void onUsdBasedServiceDiscoveryResult(int sessionId, byte[] srcAddress,
+                        int updateIndicator, byte[] tlvs) throws RemoteException {
+                    eventListener.onUsdBasedServiceDiscoveryResult(sessionId, srcAddress,
+                            updateIndicator, tlvs);
+                }
+
+                @Override
+                public void onUsdBasedServiceDiscoveryTerminated(int sessionId,
+                        int reasonCode) throws RemoteException {
+                    eventListener.onUsdBasedServiceDiscoveryTerminated(sessionId, reasonCode);
+                }
+
+                @Override
+                public void onUsdBasedServiceAdvertisementTerminated(int sessionId,
+                        int reasonCode) throws RemoteException {
+                    eventListener.onUsdBasedServiceAdvertisementTerminated(sessionId, reasonCode);
+                }
+            };
+            return service.registerCallback(callback.asBinder());
+        } catch (RemoteException e) {
+            Log.e(TAG, e.getLocalizedMessage(), e);
+        }
+        return false;
+    }
+
+    public boolean unregisterCallback() {
+        IP2p service = getService();
+        if (service == null || callback == null) {
+            return false;
+        }
+        boolean ret = false;
+        try {
+            ret = service.unregisterCallback(callback.asBinder());
+        } catch (RemoteException e) {
+            Log.e(TAG, e.getLocalizedMessage(), e);
+        }
+        if (ret) {
+            eventListener = null;
+            callback = null;
+        }
+        return ret;
     }
 }
 
