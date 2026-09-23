@@ -9,7 +9,7 @@ interface IP2p {
 
     /* Support for WPA3 Compatibility Mode in PCC Mode */
     const long P2P_FEATURE_PCC_MODE_WPA3_COMPATIBILITY = 1 << 1;
-
+    
     void addBonjourService(in byte[] query, in byte[] response);
     void p2p_find(in String args);
     void addGroup(in boolean persistent, in int persistentNetworkId);
@@ -46,7 +46,8 @@ interface IP2p {
     void p2p_presence_req(in String args);
     void p2p_ext_listen(in String args);
     void p2p_remove_client(in String args);
+
     boolean registerCallback(in IBinder callback);
     boolean unregisterCallback(in IBinder callback);
+    String p2p_get_device_address();
 }
-

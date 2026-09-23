@@ -22,9 +22,11 @@ import android.util.Log;
 
 import java.lang.reflect.Method;
 
+
+
 public class P2p {
     private static final String TAG = "fdep2p";
-    public static final String SERVICE_NAME = "openfdep2p";
+    public static final String SERVICE_NAME = "android.openfde.IP2p";
 
     private static IP2p sService;
     private static P2p sInstance;
@@ -833,5 +835,17 @@ public class P2p {
         }
         return ret;
     }
-}
 
+    public String getDeviceAddress() {
+        IP2p service = getService();
+        if (service == null) {
+            return null;
+        }
+        try {
+            return service.p2p_get_device_address();
+        } catch (RemoteException e) {
+            Log.e(TAG, e.getLocalizedMessage(), e);
+        }
+        return null;
+    }
+}
