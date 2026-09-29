@@ -153,6 +153,7 @@ java_library {
         "sdk/src/java/android/openfde/P2p.java",
         "sdk/src/java/android/openfde/IP2p.aidl",
         "sdk/src/java/android/openfde/IP2pCallback.aidl",
+        "sdk/src/java/android/openfde/ISupplicantP2pNetwork.aidl",
     ],
     visibility: [
         "//packages/modules/Wifi/service",
