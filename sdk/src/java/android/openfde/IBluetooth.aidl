@@ -36,4 +36,8 @@ interface IBluetooth {
     boolean connect(String address);
     boolean disconnect(String address);
     boolean setDeviceProperty(String address, int type, String val);
+    boolean isEnabled();
+    boolean sspReply(String address, int type, boolean accept, int passkey);
+    boolean pinReply(String address, boolean accept, String pin);
+    String getAdapterName();
 }
