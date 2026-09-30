@@ -45,7 +45,17 @@ public class Bluetooth {
         DEVICE_PROPERTY_CHANGED,
         BOND_STATE_CHANGE,
         FROFILE_CONNECTION_STATE_CHANGED,
-        PIN_REQUEST
+        PIN_REQUEST,
+        SSP_REQUEST;
+
+        public static CallBackEvents fromOrdinal(int ordinal) {
+            for (CallBackEvents e : values()) {
+                if (e.ordinal() == ordinal) {
+                    return e;
+                }
+            }
+            return null;
+        }
     }
     public interface EventListener {
         void onEvent(int what, String data);
@@ -346,5 +356,57 @@ public class Bluetooth {
             Log.e(TAG, e.getLocalizedMessage(), e);
         }
         return false;
+    }
+
+    public boolean isEnabled() {
+        IBluetooth service = getService();
+        if (service == null) {
+            return false;
+        }
+        try {
+            return service.isEnabled();
+        } catch (RemoteException e) {
+            Log.e(TAG, e.getLocalizedMessage(), e);
+        }
+        return false;
+    }
+
+    public boolean sspReply(String address, int type, boolean accept, int passkey) {
+        IBluetooth service = getService();
+        if (service == null) {
+            return false;
+        }
+        try {
+            return service.sspReply(address, type, accept, passkey);
+        } catch (RemoteException e) {
+            Log.e(TAG, e.getLocalizedMessage(), e);
+        }
+        return false;
+    }
+
+    public boolean pinReply(String address, boolean accept, String pin) {
+        IBluetooth service = getService();
+        if (service == null) {
+            return false;
+        }
+        try {
+            return service.pinReply(address, accept, pin);
+        } catch (RemoteException e) {
+            Log.e(TAG, e.getLocalizedMessage(), e);
+        }
+        return false;
+    }
+
+    public String getAdapterName() {
+        IBluetooth service = getService();
+        if (service == null) {
+            return null;
+        }
+        try {
+            return service.getAdapterName();
+        } catch (RemoteException e) {
+            Log.e(TAG, e.getLocalizedMessage(), e);
+        }
+        return null;
     }
 }

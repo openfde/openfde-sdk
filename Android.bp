@@ -140,7 +140,7 @@ java_library {
     ],
 
     apex_available: [
-        "com.android.btservices",
+        "com.android.bt",
     ],
 }
 java_library {
