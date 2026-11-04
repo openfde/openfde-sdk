@@ -164,3 +164,23 @@ java_library {
     ],
     installable:true,
 }
+
+java_library {
+    name: "org.openfde.platform.wifi",
+    min_sdk_version: "30",
+    platform_apis: true,
+    sdk_version: "module_current",
+
+    srcs: [
+        "sdk/src/java/android/openfde/Wifi.java",
+        "sdk/src/java/android/openfde/IWifi.aidl",
+        "sdk/src/java/android/openfde/IWifiCallback.aidl",
+    ],
+    visibility: [
+        "//packages/modules/Wifi/service",
+    ],
+    apex_available: [
+        "com.android.wifi",
+    ],
+    installable:true,
+}
